@@ -22,8 +22,5 @@ class Transaction extends Model
     {
         return $this->belongsTo(Budget::class);
     }
-    public function users(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
+
 }

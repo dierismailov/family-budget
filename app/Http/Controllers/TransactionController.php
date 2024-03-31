@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\ITransactionRepository;
-use App\Http\Requests\TransactionRequest;
+use App\Http\Requests\TransactionRequests\TransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use App\Services\TransactionServices\TransactionService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
 

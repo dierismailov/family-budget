@@ -13,21 +13,19 @@ use mysql_xdevapi\Table;
  * @property string $name
  * @property int $creator_id
  * @property string $status
+ * @property string $limit
  */
 class Budget extends Model
 {
     use HasFactory;
 
-    protected $table = 'family_budgets';
 
     protected $fillable = [
-        'name',
-        'creator_id',
-        'status'
+        'name'
     ];
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'budget_member');
+        return $this->belongsToMany(User::class);
     }
 
     public function transaction(): hasMany

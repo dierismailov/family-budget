@@ -19,14 +19,14 @@ class UpdateUserService
     /**
      * @throws BusinessException
      */
-    public function execute(UserDTO $userDTO, int $id): User
+    public function execute(UserDTO $userDTO, int $user_id): User
     {
-        $user = $this->repository->getUserById($id);
+        $user = $this->repository->getUserById($user_id);
         if ($user === null) {
             throw new BusinessException(__('message.user_not_found'), 400);
         }
 
-        return $this->repository->updateUserById($userDTO, $id);
+        return $this->repository->updateUserById($userDTO, $user);
 
     }
 }

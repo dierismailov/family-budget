@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\IUserRepository;
-use App\Http\Requests\UserRequest;
-use App\Http\Resources\BudgetResource;
+use App\DTO\UserDTO;
+use App\Exceptions\BusinessException;
+use App\Exceptions\ModelUserNotFoundException;
+use App\Http\Requests\UserRequests\StoreUserRequest;
 use App\Http\Resources\UserResource;
-use App\Jobs\SendCodeForRegister;
 use App\Models\User;
+use App\Services\UserServices\DeleteUserService;
 use App\Services\UserServices\GetAllUsersService;
+use App\Services\UserServices\GetUserByIdService;
+use App\Services\UserServices\UpdateUserService;
 use App\Services\UserServices\UserService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 
 class UserController extends Controller
 {
@@ -24,18 +25,23 @@ class UserController extends Controller
     }
 
 
-    public function index(UserService $service): Collection|LengthAwarePaginator
+    public function index(GetAllUsersService $service): AnonymousResourceCollection
     {
-        return $service->getAllUsers();
+        $users = $service->execute();
+
+        return UserResource::collection($users);
     }
 
-    public function show(UserService $service, int $user_id): ?User
+    /**
+     * @throws ModelUserNotFoundException
+     */
+    public function show(GetUserByIdService $service, int $user_id): ?User
     {
-        return $service->getUserById($user_id);
+        return $service->execute($user_id);
     }
 
 
-    public function register(UserRequest $request): UserResource
+    public function register(StoreUserRequest $request): UserResource
     {
         $validated = $request->validated();
         $user = User::query()->create($validated);
@@ -43,7 +49,27 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
+    /**
+     * @throws BusinessException
+     */
+    public function update(UpdateUserService $service, StoreUserRequest $request, int $user_id): UserResource
+    {
+        $validated = $request->validated();
+        $user = $service->execute(UserDTO::fromArray($validated), $user_id);
 
+        return new UserResource($user);
+    }
+
+
+    /**
+     * @throws BusinessException
+     */
+    public function destroy(DeleteUserService $service, int $user_id): BusinessException
+    {
+        $service->execute($user_id);
+
+        throw new BusinessException(__('message.user_deleted'), 200);
+    }
     /**
      * Получить пользователей, связанных с бюджетом.
      *
@@ -53,9 +79,15 @@ class UserController extends Controller
      */
     public function getUsersInBudget(UserService $service, int $budget_id): AnonymousResourceCollection
     {
+
         $users = $service->getUsersInBudget($budget_id);
-        dd($users);
+
         return UserResource::collection($users);
+
+    }
+
+    public function addUsersInBudget(AddUserInBudgetService $service, int $budget_id)
+    {
 
     }
 

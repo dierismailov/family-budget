@@ -20,7 +20,7 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->foreignId( 'budget_id')
-                ->constrained('family_budgets')
+                ->constrained('budgets')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->integer('amount');

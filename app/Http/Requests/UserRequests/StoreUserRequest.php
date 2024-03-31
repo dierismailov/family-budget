@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\UserRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
-class TransactionRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +23,11 @@ class TransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|min:0',
-            'budget_id' => 'required|min:0',
-            'amount' => 'required|integer|min:0',
-            'category' => 'nullable',
-            'type' => 'required|string|max:50'
+            'name' => 'required|string|max:50',
+            'surname' => 'required|string|max:50',
+            'email' => 'required|email',
+            'password' => ['required', Password::default()],
+            'verification' => 'nullable'
         ];
     }
 }

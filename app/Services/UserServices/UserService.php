@@ -3,7 +3,9 @@
 namespace App\Services\UserServices;
 
 use App\Contracts\IUserRepository;
+use App\Exceptions\ModelUserNotFoundException;
 use App\Models\User;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
 
 class UserService
@@ -15,28 +17,8 @@ class UserService
 
     }
 
-    /**
-     * Получить всех пользователей.
-     *
-     * @return Collection
-     */
-    public function getAllUsers(): Collection
-    {
-        return $this->repository->getAllUsers();
-    }
 
-    /**
-     * Получить пользователя по ID.
-     *
-     * @param int $user_id
-     * @return User|null
-     */
-    public function getUserById(int $user_id): ?User
-    {
-        return $this->repository->getUserById($user_id);
-    }
-
-    public function getUsersInBudget(int $budget_id): Collection
+    public function getUsersInBudget(int $budget_id): AnonymousResourceCollection
     {
         return $this->repository->getUsersInBudget($budget_id);
     }

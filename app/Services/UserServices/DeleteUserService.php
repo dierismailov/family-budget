@@ -16,12 +16,12 @@ class DeleteUserService
     /**
      * @throws BusinessException
      */
-    public function execute(int $id): void
+    public function execute(int $user_id): void
     {
-        $user = $this->repository->getUserById($id);
+        $user = $this->repository->getUserById($user_id);
         if ($user === null) {
             throw new BusinessException(__('message.user_not_found'), 400);
         }
-        $user->delete();
+         $this->repository->deleteUser($user_id);
     }
 }

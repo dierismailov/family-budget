@@ -13,6 +13,7 @@ class BudgetResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
+     * @param Request $request
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
@@ -21,7 +22,8 @@ class BudgetResource extends JsonResource
             'id' => $this->resource->id,
             'name' => $this->resource->name,
             'creator_id' => $this->resource->creator_id,
-            'status' => $this->resource->status
+            'status' => $this->resource->status,
+            'limit' => $this->resource->limit
         ];
     }
 }

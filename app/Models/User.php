@@ -2,14 +2,22 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $surname
+ * @property string $email
+ * @property string $password
+ * @property string $verification
+ */
 
 class User extends Authenticatable
 {
@@ -50,11 +58,8 @@ class User extends Authenticatable
 
     public function budgets(): BelongsToMany
     {
-        return $this->belongsToMany(Budget::class, 'budget_member');
+        return $this->belongsToMany(Budget::class);
     }
 
-    public function transaction(): hasMany
-    {
-        return $this->hasMany(Transaction::class);
-    }
+
 }

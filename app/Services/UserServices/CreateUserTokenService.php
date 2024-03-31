@@ -4,7 +4,7 @@ namespace App\Services\UserServices;
 
 use App\Contracts\IUserRepository;
 use App\Exceptions\BusinessException;
-use App\Http\Requests\PersonalAccessTokenRequest;
+use App\Http\Requests\AuthRequests\PersonalAccessTokenRequest;
 
 class CreateUserTokenService
 {
