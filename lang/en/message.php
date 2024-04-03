@@ -11,5 +11,10 @@ return [
     'budget_deleted' => 'Budget deleted',
     'you_not_included' => 'You are not included in this budget',
     'budget_exist' => 'There is a budget with this name',
-    'user_deleted' => 'User deleted'
+    'user_deleted' => 'User deleted',
+    'user_was_added' => 'The user was previously added',
+    'user_added_successfully' => 'User added successfully',
+    'limit_set' => 'Limit set',
+    'limit_not_set' => 'Limit not set',
+    'transactions_not_found' => 'Transactions not found'
 ];

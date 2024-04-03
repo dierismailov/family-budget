@@ -9,8 +9,7 @@ class UserDTO
         private string $name,
         private string $surname,
         private string $email,
-        private string $password,
-        private bool   $verification
+        private string $password
     )
     {
 
@@ -21,10 +20,6 @@ class UserDTO
         return $this->password;
     }
 
-    public function isVerification(): bool
-    {
-        return $this->verification;
-    }
 
     public function getName(): string
     {
@@ -48,8 +43,7 @@ class UserDTO
             name: $data['name'],
             surname: $data['surname'],
             email: $data['email'],
-            password: $data['password'],
-            verification: $data['verification']
+            password: $data['password']
         );
     }
 

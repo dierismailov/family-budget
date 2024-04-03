@@ -12,7 +12,8 @@ class CheckClientHasApiToken
     /**
      * Handle an incoming request.
      *
-     * @param  Closure(Request): (Response)  $next
+     * @param Closure(Request): (Response) $next
+     * @throws EnsureTokenException
      */
     public function handle(Request $request, Closure $next): Response
     {

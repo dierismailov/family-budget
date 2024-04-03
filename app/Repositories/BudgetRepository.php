@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Contracts\IBudgetRepository;
 use App\DTO\BudgetDTO;
 use App\Exceptions\BusinessException;
+use App\Exceptions\ModelBudgetNotFoundException;
 use App\Jobs\CreateRecordInBudgetMemberTable;
 use App\Models\Budget;
 use App\Models\BudgetUser;
@@ -77,22 +78,20 @@ class BudgetRepository implements IBudgetRepository
     }
     }
 
+    /**
+     * @throws ModelBudgetNotFoundException
+     */
     public function setLimit(int $limit, int $budget_id): bool
     {
         $budget = Budget::query()->find($budget_id);
-        if (!$budget) {
-            // Обработка ситуации, когда бюджет не найден
-            return false;
+
+        if ($budget === null){
+            throw new ModelBudgetNotFoundException(__('message.budget_not_found'), 403);
         }
 
         $budget->limit = $limit;
-        try {
-            $budget->save();
-            return true;
-        } catch (\Exception $e) {
-            // Обработка ошибки при сохранении изменений
-            return false;
-        }
+        $budget->save();
+         return true;
     }
 
     public function updateBudget(BudgetDTO $budgetDTO,Budget $budget, int $user_id): ?Budget

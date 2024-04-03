@@ -13,7 +13,7 @@ use mysql_xdevapi\Table;
  * @property string $name
  * @property int $creator_id
  * @property string $status
- * @property string $limit
+ * @property int $limit
  */
 class Budget extends Model
 {

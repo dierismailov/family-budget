@@ -4,6 +4,7 @@ namespace App\Services\UserServices;
 
 use App\Contracts\IRegisterRepository;
 use App\Models\Register;
+use App\Models\User;
 
 class RegisterService
 {
@@ -14,7 +15,7 @@ class RegisterService
     }
 
 
-    public function execute(array $data): Register
+    public function execute(array $data): ?User
     {
 
         return  $this->repository->createUserRegister($data);

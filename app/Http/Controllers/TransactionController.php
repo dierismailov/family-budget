@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\ITransactionRepository;
+use App\DTO\TransactionDTO;
 use App\Http\Requests\TransactionRequests\TransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
-use App\Services\TransactionServices\TransactionService;
+use App\Services\TransactionServices\getTransactionByBudgetService;
+use App\Services\TransactionServices\StoreTransactionService;
+use App\Services\TransactionServices\GetTransactionByUserService;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
@@ -19,40 +23,30 @@ class TransactionController extends Controller
     {
 
     }
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): JsonResponse
-    {
-        $transactions = Transaction::all();
-
-        return response()->json($transactions);
-    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TransactionRequest $request): TransactionResource
+    public function store(TransactionRequest $request, StoreTransactionService $service): TransactionResource
     {
          $validated = $request->validated();
-
-         $transaction = Transaction::query()->create($validated);
+         $transaction = $service->execute(TransactionDTO::fromArray($validated));
 
          return new TransactionResource($transaction);
     }
 
     public function getTransactionsByBudget(
         int $budget_id,
-        TransactionService $service
+        getTransactionByBudgetService $service
     ): AnonymousResourceCollection|Collection
     {
-        return $service->getTransactionByBudget($budget_id);
+        return $service->execute($budget_id);
     }
     public function getTransactionsByUser(
         int $user_id,
-        TransactionService $service
+        GetTransactionByUserService $service
     ): AnonymousResourceCollection|Collection
     {
-        return $service->getTransactionByUser($user_id);
+        return $service->execute($user_id);
     }
 }

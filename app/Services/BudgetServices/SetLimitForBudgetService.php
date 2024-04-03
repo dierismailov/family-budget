@@ -3,6 +3,7 @@
 namespace App\Services\BudgetServices;
 
 use App\Contracts\IBudgetRepository;
+use App\Exceptions\BusinessException;
 
 class SetLimitForBudgetService
 {
@@ -14,8 +15,10 @@ class SetLimitForBudgetService
     }
 
 
+
     public function execute(int $limit, int $budget_id):bool
     {
-        return $this->repository->setLimit($limit, $budget_id);
+        $this->repository->setLimit($limit, $budget_id);
+        return true;
     }
 }

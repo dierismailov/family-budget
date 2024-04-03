@@ -7,10 +7,14 @@ use App\DTO\UserDTO;
 use App\Exceptions\ModelBudgetNotFoundException;
 use App\Exceptions\ModelUserNotFoundException;
 use App\Http\Resources\UserResource;
+use App\Jobs\AddUserInBudgetJob;
 use App\Models\Budget;
+use App\Models\BudgetUser;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserRepository implements IUserRepository
 {
@@ -34,8 +38,7 @@ class UserRepository implements IUserRepository
         $user->name = $userDTO->getName();
         $user->surname = $userDTO->getSurname();
         $user->email = $userDTO->getEmail();
-        $user->password = $userDTO->getPassword();
-        $user->verification = $userDTO->isVerification();
+        $user->password = Hash::make($userDTO->getPassword());
         $user->save();
 
         return $user;
@@ -70,7 +73,7 @@ class UserRepository implements IUserRepository
     public function createUserToken(string $email, User $user): string
     {
         return $user->createToken(
-            $email, ['server:update'], now()->addSeconds(30)
+            $email, ['server:update'], now()->addSeconds(86400)
         )->plainTextToken;
     }
 
@@ -94,5 +97,30 @@ class UserRepository implements IUserRepository
         }
 
         return UserResource::collection($users);
+    }
+
+    public function addUserInBudget(int $budget_id, int $user_id): bool
+    {
+
+        $record = new BudgetUser();
+        $record->user_id = $user_id;
+        $record->budget_id = $budget_id;
+        $record->save();
+
+        return true;
+    }
+
+    public function sendEmailForUser(User $user, int $budget_id): bool
+    {
+        $token = Str::random(60);
+
+        /** @var User|null $user */
+        $user->confirmation_token = $token;
+        $user->save();
+
+
+        AddUserInBudgetJob::dispatch($user, $budget_id, $token);
+
+        return true;
     }
 }

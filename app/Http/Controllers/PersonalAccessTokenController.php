@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\IUserRepository;
 use App\Exceptions\BusinessException;
 use App\Http\Requests\AuthRequests\PersonalAccessTokenRequest;
-use App\Services\CreateUserTokenService;
+use App\Services\UserServices\CreateUserTokenService;
 use Illuminate\Http\JsonResponse;
 
 class PersonalAccessTokenController extends Controller

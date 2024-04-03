@@ -28,4 +28,8 @@ interface IUserRepository
     public function createUserToken(string $email, User $user): string;
 
     public function getUsersInBudget(int $budget_id): Paginator|AnonymousResourceCollection;
+
+    public function addUserInBudget(int $budget_id, int $user_id): bool;
+
+    public function sendEmailForUser(User $user, int $budget_id): bool;
 }

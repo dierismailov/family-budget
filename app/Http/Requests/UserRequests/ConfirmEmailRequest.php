@@ -1,16 +1,12 @@
 <?php
 
-namespace App\Http\Requests\AuthRequests;
+namespace App\Http\Requests\UserRequests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-
-class PersonalAccessTokenRequest extends FormRequest
+class ConfirmEmailRequest extends FormRequest
 {
-
-
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -22,14 +18,14 @@ class PersonalAccessTokenRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-
      * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
+
         return [
-            'email' => 'required|email',
-            'password' => 'required',
+            'budget' => 'required|integer',
+            'token' => 'required|string|min:60'
         ];
     }
 }

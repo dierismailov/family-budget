@@ -5,16 +5,20 @@ namespace App\Http\Controllers;
 use App\Contracts\IUserRepository;
 use App\DTO\UserDTO;
 use App\Exceptions\BusinessException;
+use App\Exceptions\ModelBudgetNotFoundException;
 use App\Exceptions\ModelUserNotFoundException;
+use App\Http\Requests\UserRequests\ConfirmEmailRequest;
+use App\Http\Requests\UserRequests\InputUserRequest;
 use App\Http\Requests\UserRequests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\UserServices\AddUserInBudgetService;
+use App\Services\UserServices\CheckUserForAddService;
 use App\Services\UserServices\DeleteUserService;
 use App\Services\UserServices\GetAllUsersService;
 use App\Services\UserServices\GetUserByIdService;
 use App\Services\UserServices\UpdateUserService;
 use App\Services\UserServices\UserService;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserController extends Controller
@@ -38,15 +42,6 @@ class UserController extends Controller
     public function show(GetUserByIdService $service, int $user_id): ?User
     {
         return $service->execute($user_id);
-    }
-
-
-    public function register(StoreUserRequest $request): UserResource
-    {
-        $validated = $request->validated();
-        $user = User::query()->create($validated);
-
-        return new UserResource($user);
     }
 
     /**
@@ -86,9 +81,28 @@ class UserController extends Controller
 
     }
 
-    public function addUsersInBudget(AddUserInBudgetService $service, int $budget_id)
+    /**
+     * @param CheckUserForAddService $service
+     * @param int $budget_id
+     * @param InputUserRequest $request
+     * @return string
+     * @throws BusinessException
+     * @throws ModelUserNotFoundException
+     * @throws ModelBudgetNotFoundException
+     */
+    public function addUsersInBudget(CheckUserForAddService $service, int $budget_id, InputUserRequest $request): string
     {
+        return $service->execute($budget_id, $request);
+    }
 
+    /**
+     * @throws BusinessException
+     * @throws ModelBudgetNotFoundException
+     * @throws ModelUserNotFoundException
+     */
+    public function confirmForAddBudget(ConfirmEmailRequest $request, AddUserInBudgetService $service): BusinessException
+    {
+        return $service->execute($request);
     }
 
 }

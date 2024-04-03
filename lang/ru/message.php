@@ -11,5 +11,10 @@ return [
     'budget_deleted' => 'Бюджет удален',
     'you_not_included' => 'Вы не включены в этот бюджет',
     'budget_exist' => 'Бюджет с таким названием существует',
-    'user_deleted' => 'Пользователь удален'
+    'user_deleted' => 'Пользователь удален',
+    'user_was_added' => 'Пользователь ранее был добавлен',
+    'user_added_successfully' => 'Пользователь успешно добавлен',
+    'limit_set' => 'Лимит установлен',
+    'limit_not_set' => 'Лимит не установлен',
+    'transactions_not_found' => 'Транзакции не найдены'
 ];
