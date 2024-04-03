@@ -88,7 +88,6 @@ class BudgetRepository implements IBudgetRepository
         if ($budget === null){
             throw new ModelBudgetNotFoundException(__('message.budget_not_found'), 403);
         }
-
         $budget->limit = $limit;
         $budget->save();
          return true;

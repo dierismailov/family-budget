@@ -24,22 +24,18 @@ class StatisticService
      * @throws ModelBudgetNotFoundException
      * @throws TransactionsNotFoundException
      */
-    public function execute(array $array)
+    public function execute(array $array): array
     {
         $budget_id = $array['budget_id'];
+        $type = $array['type'];
         $budget = Budget::query()->find($budget_id);
 
         if ($budget === null) {
-            throw new ModelBudgetNotFoundException(__('message.budget_not_found'), 403);
+            response()->json(__('message.budget_not_found'), 403);
         }
-        $transaction = Transaction::query()->where('budget_id', $budget_id)->get();
 
-        if (count($transaction) === 0) {
-            throw new TransactionsNotFoundException(__('message.transactions_not_found'), 403);
-        }
-//        dd(now('Asia/Tashkent'));
-          return  $this->repository->chart($user, $budget);
-
+//
+        return $this->repository->chart($budget_id, $type);
 
     }
 }

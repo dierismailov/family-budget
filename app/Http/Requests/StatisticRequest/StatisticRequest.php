@@ -23,7 +23,8 @@ class StatisticRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'budget_id' => $this->input('budget_id') ? ['required', 'integer'] : [],
+            'budget_id' => $this->input('budget_id') ? 'required|integer': '',
+            'type' => $this->input('type') ? 'required|string|in:expense,income' : '',
         ];
     }
 }

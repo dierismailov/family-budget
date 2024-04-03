@@ -22,7 +22,7 @@ class BudgetFactory extends Factory
         return [
             'name' => $this->faker->userName(),
             'creator_id' => $user_id->random(),
-            'status' => $this->faker->word(),
+            'status' => 'stable',
             'limit' => $this->faker->numberBetween(10000, 1000000),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

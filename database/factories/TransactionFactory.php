@@ -31,7 +31,7 @@ class TransactionFactory extends Factory
             'amount' => $this->faker->numberBetween(100000, 10000000),
             'category' => $this->faker->randomElement($categories),
             'type' => $this->faker->randomElement($type),
-            'created_at' => Carbon::now(),
+            'created_at' => $this->faker->dateTimeBetween('-1 years', 'now')->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now(),
         ];
     }

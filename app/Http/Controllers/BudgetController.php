@@ -128,18 +128,10 @@ class BudgetController extends Controller
     /**
      * @throws BusinessException
      */
-    public function setLimitExpense(int $budget_id, SetLimitForBudgetService $service ): BusinessException
+    public function setLimitExpense(int $budget_id, SetLimitForBudgetService $service, LimitRequest $request): void
     {
-            dd($budget_id);
             $validated = $request->validated();
-            $result =  $service->execute($validated, $budget_id);
-
-            if ($result){
-                throw new BusinessException(__('message.limit_set'), 200);
-            } else {
-
-                throw new BusinessException(__('message.limit_not_set'), 400);
-            }
+            $service->execute($validated, $budget_id);
 
     }
 

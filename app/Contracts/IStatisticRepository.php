@@ -2,10 +2,11 @@
 
 namespace App\Contracts;
 
-use App\Models\Budget;
-use App\Models\User;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 
 interface IStatisticRepository
 {
-    public function chart(User $user, Budget $budget);
+    public function chart(int $budget_id, string $type): array;
 }

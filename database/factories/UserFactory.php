@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'surname' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
             'password' => $this->faker->password(),
-            'email_verified_at' => $this->faker->boolean(),
+            'email_verified_at' => null,
             'confirmation_token' => $this->faker->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

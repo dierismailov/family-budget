@@ -23,7 +23,7 @@ class LimitRequest extends FormRequest
     public function rules(): array
     {
         return [
-             "limit" => 'required|integer|min=0'
+             "limit" => 'required|integer|min:0'
         ];
     }
 }

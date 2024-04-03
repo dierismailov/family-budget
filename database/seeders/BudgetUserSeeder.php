@@ -14,7 +14,7 @@ class BudgetUserSeeder extends Seeder
     public function run(): void
     {
          BudgetUser::factory()
-             ->count(100)
+             ->count(1000)
              ->create();
     }
 }
