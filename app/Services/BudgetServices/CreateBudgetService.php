@@ -16,7 +16,7 @@ class CreateBudgetService
     }
 
 
-    public function execute(BudgetDTO $budgetDTO, int $user_id): ?Budget
+    public function execute(BudgetDTO $budgetDTO, int $user_id): Budget
     {
         return $this->repository->storeBudgetByUser($budgetDTO, $user_id);
     }
