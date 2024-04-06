@@ -16,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $surname
  * @property string $email
  * @property string $password
- * @property string $verification
+ * @property string $email_verified_at
  * @property string $confirmation_token
  */
 
@@ -34,7 +34,6 @@ class User extends Authenticatable
         'surname',
         'email',
         'password',
-        'verification',
     ];
 
     /**
@@ -44,7 +43,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -54,7 +52,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 
     public function budgets(): BelongsToMany

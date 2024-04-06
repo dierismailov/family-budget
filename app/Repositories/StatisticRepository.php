@@ -8,10 +8,10 @@ use App\Exceptions\TransactionsNotFoundException;
 use App\Models\Budget;
 use App\Models\Transaction;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class StatisticRepository implements IStatisticRepository
@@ -48,5 +48,38 @@ class StatisticRepository implements IStatisticRepository
 
         return $data;
 
+    }
+
+    public  function chartFormatter(Collection $collection, string $type, Carbon $requestDate): Collection
+    {
+        $startDate = 0;
+        $count = 0;
+        if ($type === "monthly") {
+            $startDate = $requestDate->startOfMonth();
+            $count = $requestDate->daysInMonth;
+        } elseif ($type === "yearly") {
+            $startDate = $requestDate->startOfYear();
+            $count = 12;
+        }
+
+
+        for ($i = 0; $i < $count; $i++) {
+            $currDate = $startDate->copy();
+
+            $date = null;
+            if ($type === "monthly") {
+                $date = $currDate->addDays($i)->format("Y-m-d");
+            } elseif ($type === "yearly") {
+                $date = $currDate->addMonth($i)->format("Y-m");
+            }
+
+
+            if ($collection->has($date) === false) {
+                $collection->put($date, 0);
+            }
+        }
+
+
+        return $collection->sortKeys();
     }
 }

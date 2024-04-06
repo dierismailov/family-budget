@@ -19,7 +19,8 @@ class CodeForRegister extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        private User $user
+        private User $user,
+        private int $randNum
     )
     {
 
@@ -40,19 +41,11 @@ class CodeForRegister extends Mailable
      */
     public function content(): Content
     {
-        $randNum = rand(100000, 999999);
-        Cache::remember('data-for-register', 60, function () use ($randNum) {
-            return [
-                      "user" => $this->user,
-                      "code" => $randNum
-            ];
-        });
-
         return new Content(
             view: 'mail.message',
             with: [
                 'name' => $this->user->name,
-                'random' => $randNum
+                'random' => $this->randNum
             ]
         );
     }

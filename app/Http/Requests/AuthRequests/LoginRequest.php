@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\StatisticRequest;
+namespace App\Http\Requests\AuthRequests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
-class StatisticRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +24,8 @@ class StatisticRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'budget_id' => 'required|integer',
-            'request_date' =>  'required|date',                        //'2023-02-01',
-            'type' => 'required|string|in:monthly,yearly',             //'monthly|yearly'
-            'transaction_type' => 'required|string|in:income,expense'  //тип транзакции,
+            'email' => 'required|email',
+            'password' => ['required', Password::default()],
         ];
     }
 }

@@ -2,20 +2,48 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Contracts\IUserRepository;
+use App\DTO\UserDTO;
+use App\Exceptions\BusinessException;
+use App\Exceptions\CodeNoConfirmException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthRequests\ConfirmRequest;
 use App\Http\Requests\UserRequests\StoreUserRequest;
-use App\Http\Resources\UserResource;
-use App\Models\User;
-use App\Services\UserServices\RegisterService;
-use Illuminate\Http\Request;
+use App\Services\UserServices\AuthService\ConfirmService;
+use App\Services\UserServices\AuthService\RegisterService;
 
 class RegisterController extends Controller
 {
-    public function register(StoreUserRequest $request, RegisterService $service): UserResource
+
+    public function __construct(
+        protected IUserRepository $repository
+    )
+    {
+
+    }
+
+    /**
+     * @throws BusinessException
+     */
+    public function register(StoreUserRequest $request, RegisterService $service): BusinessException
     {
         $validated = $request->validated();
-        $user = $service->execute($validated);
+        $service->execute(UserDTO::fromArray($validated));
 
-        return new UserResource($user);
+        throw new BusinessException(__('message.code_sent'), 200);
+
+    }
+
+    /**
+     * @throws BusinessException
+     * @throws CodeNoConfirmException
+     */
+    public function confirm(ConfirmRequest $request, ConfirmService $service)
+    {
+        $request->validated();
+         $service->execute($request->input('code'));
+
+        throw new BusinessException(__('message.code_confirmed'), 200);
+
     }
 }

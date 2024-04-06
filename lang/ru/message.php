@@ -1,11 +1,11 @@
 <?php
 return [
-    'exists_user' => 'Пользователь с такой почтой сущестсвует.',
+    'exists_user' => 'Пользователь с такой электронной почтой сущестсвует.',
     'user_not_found' => 'Пользователь не найден',
     'user_destroyed' => 'Запись была успешна удалена.',
-    'organization_not_found' => 'Организация не найдена.',
     'password_mismatch' => 'Пароли не совпадают',
     'not_confirmed' => 'Вы ввели нерпавильный код',
+    'code_confirmed' => 'Код подтвержден',
     'empty' => 'Список пуст',
     'budget_not_found' => 'Бюджет не найден',
     'budget_deleted' => 'Бюджет удален',
@@ -16,5 +16,7 @@ return [
     'user_added_successfully' => 'Пользователь успешно добавлен',
     'limit_set' => 'Лимит установлен',
     'limit_not_set' => 'Лимит не установлен',
-    'transactions_not_found' => 'Транзакции не найдены'
+    'transactions_not_found' => 'Транзакции не найдены',
+    'code_sent' => 'Код отправлен на электронную почту',
+    'email_not_verified' => 'Электронная почта не подтверждена'
 ];

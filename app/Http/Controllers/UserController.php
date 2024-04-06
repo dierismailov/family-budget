@@ -100,7 +100,7 @@ class UserController extends Controller
      * @throws ModelBudgetNotFoundException
      * @throws ModelUserNotFoundException
      */
-    public function confirmForAddBudget(ConfirmEmailRequest $request, AddUserInBudgetService $service): BusinessException
+    public function confirmUserForAddBudget(ConfirmEmailRequest $request, AddUserInBudgetService $service): BusinessException
     {
         return $service->execute($request);
     }

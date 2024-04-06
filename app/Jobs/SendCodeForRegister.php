@@ -19,7 +19,8 @@ class SendCodeForRegister implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        private User $user
+        private User $user,
+        private int $randNum
     )
     {
 
@@ -30,6 +31,6 @@ class SendCodeForRegister implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to("dierismailov9@gmail.com")->send(new CodeForRegister($this->user));
+        Mail::to($this->user->email)->send(new CodeForRegister($this->user, $this->randNum));
     }
 }
