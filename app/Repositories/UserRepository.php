@@ -123,4 +123,12 @@ class UserRepository implements IUserRepository
 
         return true;
     }
+
+    public function getUserByToken(string $token): ?User
+    {
+        /** @var User|null $user */
+        $user = User::query()->where('confirmation_token',$token)->first();
+
+        return $user;
+    }
 }

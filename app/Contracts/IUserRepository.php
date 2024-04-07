@@ -32,4 +32,6 @@ interface IUserRepository
     public function addUserInBudget(int $budget_id, int $user_id): bool;
 
     public function sendEmailForUser(User $user, int $budget_id): bool;
+
+    public function getUserByToken(string $token): ?User;
 }

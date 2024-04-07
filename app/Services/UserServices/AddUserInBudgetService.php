@@ -2,6 +2,7 @@
 
 namespace App\Services\UserServices;
 
+use App\Contracts\IBudgetRepository;
 use App\Contracts\IUserRepository;
 use App\Exceptions\BusinessException;
 use App\Exceptions\ModelBudgetNotFoundException;
@@ -13,7 +14,8 @@ use App\Models\User;
 class AddUserInBudgetService
 {
     public function __construct(
-        private IUserRepository $repository
+        private IUserRepository $repository,
+        private IBudgetRepository $budgetRepository
     )
     {
 
@@ -28,10 +30,11 @@ class AddUserInBudgetService
     {
 
         $budget_id = $request->input('budget');
-        $budget = Budget::query()->find($budget_id);
+        $budget = $this->budgetRepository->getBudgetById($budget_id);
+
         $token = $request->input('token');
-        /** @var User|null $user */
-        $user = User::query()->where('confirmation_token',$token)->first();
+        $user = $this->repository->getUserByToken($token);
+
         if ($user === null) {
             throw new ModelUserNotFoundException(__('message.user_not_found'), 403);
         }

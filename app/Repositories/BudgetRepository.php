@@ -36,7 +36,15 @@ class BudgetRepository implements IBudgetRepository
     /**
      * @throws BusinessException
      */
-    public function getBudgetById(int $user_id, int $budget_id): ?Budget
+    public function getBudgetById( int $budget_id): ?Budget
+    {
+        /**  @var Budget|null $budget */
+        $budget = Budget::query()->find($budget_id);
+
+        return $budget;
+
+    }
+    public function getBudgetByIdForUser(int $user_id, int $budget_id): ?Budget
     {
         /**  @var Budget|null $budget */
         $budget = Budget::query()->find($budget_id);
@@ -50,7 +58,6 @@ class BudgetRepository implements IBudgetRepository
 
 
     }
-
     /**
      * @throws BusinessException
      */

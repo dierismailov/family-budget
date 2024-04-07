@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Contracts\IBudgetRepository;
+use App\Contracts\IBudgetUserRepository;
 use App\Contracts\IStatisticRepository;
 use App\Contracts\ITransactionRepository;
 use App\Contracts\IUserRepository;
 use App\Repositories\BudgetRepository;
+use App\Repositories\BudgetUserRepository;
 use App\Repositories\StatisticRepository;
 use App\Repositories\TransactionRepository;
 use App\Repositories\UserRepository;
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(IBudgetRepository::class, BudgetRepository::class);
         $this->app->bind(ITransactionRepository::class, TransactionRepository::class);
         $this->app->bind(IStatisticRepository::class, StatisticRepository::class);
+        $this->app->bind(IBudgetUserRepository::class, BudgetUserRepository::class);
     }
 
     /**

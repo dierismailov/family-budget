@@ -24,9 +24,9 @@ class StatisticRequest extends FormRequest
     {
         return [
             'budget_id' => 'required|integer',
-            'request_date' =>  'required|date',                        //'2023-02-01',
-            'type' => 'required|string|in:monthly,yearly',             //'monthly|yearly'
-            'transaction_type' => 'required|string|in:income,expense'  //тип транзакции,
+            'request_date' =>  'required|date',
+            'type' => 'required|string|in:monthly,yearly',
+            'transaction_type' => 'required|string|in:income,expense'
         ];
     }
 }

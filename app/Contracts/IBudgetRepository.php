@@ -12,7 +12,8 @@ interface IBudgetRepository
 {
     public function getAll(): Paginator;
 
-    public function getBudgetById(int $user_id, int $budget_id): ?Budget;
+    public function getBudgetById( int $budget_id): ?Budget;
+    public function getBudgetByIdForUser(int $user_id, int $budget_id): ?Budget;
 
     public function getAllBudgetByUserId(int $user_id): Paginator;
 

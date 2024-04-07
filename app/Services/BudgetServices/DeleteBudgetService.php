@@ -3,13 +3,15 @@
 namespace App\Services\BudgetServices;
 
 use App\Contracts\IBudgetRepository;
+use App\Contracts\IUserRepository;
 use App\Exceptions\ModelUserNotFoundException;
 use App\Models\User;
 
 class DeleteBudgetService
 {
     public function __construct(
-        private IBudgetRepository $repository
+        private IBudgetRepository $repository,
+        private IUserRepository $userRepository
     )
     {
 
@@ -20,7 +22,7 @@ class DeleteBudgetService
      */
     public function execute(int $user_id, int $budget_id): bool
     {
-        $user = User::query()->find($user_id);
+        $user = $this->userRepository->getUserById($user_id);
 
         if ($user === null) {
             throw new ModelUserNotFoundException(__('message.user_not_found'), 403);
